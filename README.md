@@ -1,6 +1,9 @@
 # Ether.Net
 **Ether.Net** is a modern, lightweight and asynchronous wrapper around the popular [SharpPcap](https://github.com/dotpcap/sharppcap) library, designed to simplify the capture and analysis of packets and metrics in .NET applications, using modern technologies such as `IAsyncEnumerable` for reading packets, `Channel` for storing them, etc. It provides an API for high-performance and non-blocking network packet capture.
 
+### NOTICE!
+*Before using the library, you need to install the [Npcap](https://npcap.com/) utility. This allows Windows software to capture raw network traffic.*
+
 ## Usage
 ### Preparation
 Before you start capturing network traffic, you need to select the device on which you want to capture packets. To do this, use the `DeviceObserver` class and the `GetAvailableDevices()` static method:
