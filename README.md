@@ -26,10 +26,10 @@ pcapProvider.SetDeviceToCaptureFrom(devices.First());
 
 You can also specify capture options by passing an instance of the `CaptureOptions` class to the constructor:
 ```csharp
-var pcapProvider = new PacketCaptureProvider(devices.First(), new CaptureOptions { Filter = string.Empty });
+var pcapProvider = new PacketCaptureProvider(devices.First(), new CaptureOptions { Filter = string.Empty, Promiscuous = true, ReadTimeoutMs = 1000 });
 ```
 
-If you don't know the BPF (Berkeley Packet Filter) syntax for filtering, you can use `BPFBuilder` to build the BPF expression:
+For more convenient filter construction or if you don't know the BPF (Berkeley Packet Filter) syntax for filtering, you can use `BPFBuilder` to build the BPF expression:
 ```csharp
 string filter = BPFBuilder.Create()
     .Protocol(BPFProto.Ip)
@@ -64,6 +64,10 @@ This class extracts and exposes all known protocol levels in the packet as nulla
 ```csharp
 var flat = rawPacket.ParseToFlat();
 ```
+Also with `FlatNetworkPacket` you can extract all protocol types present in a compressed network packet as an array:
+```csharp
+var actualTypes = flat.GetActualPacketTypes();
+```
 
 To stop capturing packets on a device, use the `Stop()` method:
 ```csharp
@@ -74,4 +78,50 @@ You can also retrieve all metrics using `GetMetrics()` calculated within the cur
 ```csharp
 var metrics = pcapProvider.GetMetrics();
 Console.WriteLine(metrics.ToString());
+```
+Below are all the metrics you can get:
+1. Total number of packets successfully captured
+2. Total number of bytes received across all captured packets
+3. Number of packets dropped by the capture mechanism (according to [SharpPcap](https://github.com/dotpcap/sharppcap))
+4. Number of packets dropped by the interface itself (according to [SharpPcap](https://github.com/dotpcap/sharppcap))
+5. List of exceptions that occurred during the capture session
+6. Timestamp when capture started
+7. Timestamp when capture completed
+8. Total duration of the capture session
+9. Average number of packets received per second since the start of capture
+10. Average number of bytes received per second since the start of capture
+11. Average size of a single packet in bytes
+12. Maximum observed packet throughput per second
+13. Maximum observed byte throughput per second
+14. Average time between packets in milliseconds
+
+## Utilities
+You can integrate `PacketCaptureProvider` into your **ASP.NET** application by registering it in the dependency container. After that, you can get an instance of `IPacketCaptureProvider` from the dependency container inside your services and controllers:
+```csharp
+builder.Services.AddPacketCaptureProvider(df =>
+{
+    var devices = DeviceObserver.GetAvailableDevices();
+    return devices.First();
+});
+```
+
+You also have the option to try to resolve an IP address to a domain name using the `TryResolveHostname()` method.
+In addition, there is a `GetIpGeolocationAsync()` method that allows you to asynchronously get the geolocation of an IP address using the public API from [ip-api.com](https://ip-api.com/). *Be mindful of request limits for free usage!* These methods are provided by the `EtherNetUtils` class. Below is an example of usage:
+```csharp
+var utils = new EtherNetUtils();
+var task = Task.Run(async () => await Task.Delay(60_000));
+
+await foreach (var rawPacket in pcapProvider.CaptureAsync())
+{
+    if (task.IsCompleted) 
+        break;
+
+    if (rawPacket.TryParseTo<IPv4Packet>(out var ipv4) == false)
+        continue;
+
+    var geo = await utils.GetIpGeolocationAsync(ipv4.SourceAddress);
+    utils.TryResolveHostname(ipv4.SourceAddress, out var hostname);
+
+    Console.WriteLine($"Hostname: {hostname ?? "unknown"}\nGeo: {geo}\n");
+}
 ```
