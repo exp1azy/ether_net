@@ -218,7 +218,7 @@ namespace Ether.Net
                 initial = Interlocked.Read(ref target);
                 if (value <= initial) return;
                 computed = value;
-            } 
+            }
             while (Interlocked.CompareExchange(ref target, computed, initial) != initial);
         }
     }

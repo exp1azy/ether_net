@@ -11,10 +11,11 @@ namespace Ether.Net.Extensions
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Registers an <see cref="IPacketCaptureProvider"/> service with the specified capture device and optional capture options.
-        /// 
+        /// <para>Registers an <see cref="IPacketCaptureProvider"/> service with the specified capture device and optional capture options.</para>
+        /// <para>
         /// This method adds the provider as a singleton to the dependency injection container,
         /// allowing the capture device and options to be created via factory functions.
+        /// </para>
         /// </summary>
         /// <param name="services">The service collection to add the provider to.</param>
         /// <param name="deviceFactory">A factory function to create the <see cref="ICaptureDevice"/> instance.</param>
@@ -30,6 +31,28 @@ namespace Ether.Net.Extensions
                 var device = deviceFactory(sp);
                 var options = optionsFactory?.Invoke(sp);
                 return new PacketCaptureProvider(device, options);
+            });
+
+            return services;
+        }
+
+        /// <summary>
+        /// Registers an <see cref="IPacketCaptureProvider"/> service with the specified capture options.
+        /// <para>
+        /// This method adds the provider as a singleton to the dependency injection container,
+        /// allowing the capture options to be created via a factory function.
+        /// </para>
+        /// </summary>
+        /// <param name="services">The service collection to add the provider to.</param>
+        /// <param name="optionsFactory">An optional factory function to create <see cref="CaptureOptions"/> for the provider.
+        /// If omitted, default options will be used.</param>
+        /// <returns>The original <see cref="IServiceCollection"/> to enable method chaining.</returns>
+        public static IServiceCollection AddPacketCaptureProvider(this IServiceCollection services, Func<IServiceProvider, CaptureOptions>? optionsFactory = null)
+        {
+            services.AddSingleton<IPacketCaptureProvider, PacketCaptureProvider>(sp =>
+            {
+                var options = optionsFactory?.Invoke(sp);
+                return new PacketCaptureProvider(options);
             });
 
             return services;

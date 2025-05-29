@@ -5,7 +5,29 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<Title>Ether.Net</Title>
+	<Authors>exp1azy</Authors>
+	<Description>Ether.Net is a modern, lightweight and asynchronous wrapper around the popular SharpPcap library, designed to simplify the capture and analysis of packets and metrics in .NET applications, using modern technologies such as IAsyncEnumerable for reading packets, Channel for storing them, etc. It provides an API for high-performance and non-blocking network packet capture.</Description>
+	<PackageProjectUrl>https://github.com/exp1azy/ether_net</PackageProjectUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<RepositoryUrl>https://github.com/exp1azy/ether_net</RepositoryUrl>
+	<PackageTags>packet;capture;network;sharppcap;packetdotnet;ip;ipv4;tcp;udp;pcap;net</PackageTags>
+	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	<Version>1.1.0</Version>
+	<PackageReleaseNotes>a few fixes + additional methods</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.5" />

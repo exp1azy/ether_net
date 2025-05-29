@@ -3,10 +3,11 @@
 namespace Ether.Net.Entities
 {
     /// <summary>
+    /// <para>
     /// Represents a flattened, easy-to-access wrapper around a network <see cref="Packet"/> instance.
     /// This class extracts and exposes all known protocol layers within the packet as nullable properties.
-    /// 
-    /// This allows consumers to quickly inspect any supported protocol layer without manually traversing the packet's protocol stack.
+    /// </para>
+    /// <para>This allows consumers to quickly inspect any supported protocol layer without manually traversing the packet's protocol stack.</para>
     /// </summary>
     public sealed class FlatNetworkPacket(Packet packet)
     {

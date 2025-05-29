@@ -20,7 +20,16 @@ namespace Ether.Net.Interfaces
         /// If you create a new instance of <see cref="PacketCaptureProvider"/> passing a capture device as parameter, you don't need to call this method.
         /// </remarks>
         /// <param name="device">The capture device to use.</param>
-        public void SetDeviceToCaptureFrom(ICaptureDevice device);
+        public void SetDevice(ICaptureDevice device);
+
+        /// <summary>
+        /// Tries to remove the capture device.
+        /// <para>
+        /// If packet capture is running, the method returns <c>false</c>.
+        /// </para>
+        /// </summary>
+        /// <returns><c>true</c>, if the capture device was successfully removed; otherwise, <c>false</c>.</returns>
+        public bool TryRemoveDevice();
 
         /// <summary>
         /// Starts the packet capture using the configured device and options.

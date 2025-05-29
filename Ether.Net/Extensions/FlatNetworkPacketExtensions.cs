@@ -9,10 +9,11 @@ namespace Ether.Net.Extensions
     public static class FlatNetworkPacketExtensions
     {
         /// <summary>
-        /// Retrieves all protocol types present in the flattened network packet as an array of <see cref="PacketType"/>.
-        /// 
+        /// <para>Retrieves all protocol types present in the flattened network packet as an array of <see cref="PacketType"/>.</para>
+        /// <para>
         /// This method traverses the encapsulated packets in the original packet payload chain,
         /// mapping each packet's CLR type to a <see cref="PacketType"/> enum value, if available.
+        /// </para>
         /// </summary>
         /// <param name="np">The <see cref="FlatNetworkPacket"/> instance to analyze.</param>
         /// <returns>An array of <see cref="PacketType"/> representing all protocol layers found in the packet.</returns>
@@ -23,9 +24,9 @@ namespace Ether.Net.Extensions
 
             while (current != null)
             {
-                if (PacketTypeMap.TryGetValue(current.GetType(), out var type))               
+                if (PacketTypeMap.TryGetValue(current.GetType(), out var type))
                     result.Add(type);
-                                               
+
                 current = current.PayloadPacket;
             }
 

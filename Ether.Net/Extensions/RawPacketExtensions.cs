@@ -36,5 +36,16 @@ namespace Ether.Net.Extensions
             packet = p.Extract<T>();
             return packet != null;
         }
+
+        /// <summary>
+        /// Checks whether the raw packet can be parsed into a packet of type <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The packet type, which must derive from <see cref="Packet"/></typeparam>
+        /// <param name="rawPacket">The raw packet.</param>
+        /// <returns><c>true</c> if the raw packet can be parsed into a packet of type <typeparamref name="T"/>; otherwise, <c>false</c>.</returns>
+        public static bool Is<T>(this RawPacket rawPacket) where T : Packet
+        {
+            return rawPacket.TryParseTo<T>(out _);
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace Ether.Net
         /// <returns>
         /// <c>true</c> if the hostname was successfully resolved; otherwise, <c>false</c>.
         /// </returns>
-        public bool TryResolveHostname(IPAddress address, out string? hostName)
+        public static bool TryResolveHostname(IPAddress address, out string? hostName)
         {
             try
             {

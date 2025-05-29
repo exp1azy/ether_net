@@ -54,7 +54,7 @@ namespace Ether.Net
         /// </summary>
         /// <remarks>
         /// If a name is used, both the port number and protocol are checked.
-        /// If a number or ambiguous name is used, only the port number is checked 
+        /// If a number or ambiguous name is used, only the port number is checked
         /// (e.g., dst port 513 will print both tcp/login traffic and udp/who traffic, and port domain will print both tcp/domain and udp/domain traffic).
         /// </remarks>
         /// <param name="port"></param>
@@ -136,7 +136,7 @@ namespace Ether.Net
         /// The <paramref name="net"/> may be either a name from the networks database or a network number.
         /// An IPv4 network number can be written as a dotted quad (e.g., 192.168.1.0), dotted triple (e.g., 192.168.1), dotted pair (e.g, 172.16), or single number (e.g., 10);
         /// the netmask is 255.255.255.255 for a dotted quad (which means that it's really a host match), 255.255.255.0 for a dotted triple, 255.255.0.0 for a dotted pair, or 255.0.0.0 for a single number.
-        /// An IPv6 network number must be written out fully; 
+        /// An IPv6 network number must be written out fully;
         /// the netmask is ff:ff:ff:ff:ff:ff:ff:ff, so IPv6 "network" matches are really always host matches, and a network match requires a netmask length.
         /// </remarks>
         /// <param name="net"></param>
@@ -203,8 +203,8 @@ namespace Ether.Net
         /// True if the packet used <paramref name="proto"/> as a protocol.
         /// </summary>
         /// <remarks>
-        /// Protocol can be a number or one of the names icmp, icmp6, igmp, igrp, pim, ah, esp, vrrp, udp, or tcp. 
-        /// Note that the identifiers tcp, udp, and icmp are also keywords and must be escaped via backslash (\), which is \\ in the C-shell. 
+        /// Protocol can be a number or one of the names icmp, icmp6, igmp, igrp, pim, ah, esp, vrrp, udp, or tcp.
+        /// Note that the identifiers tcp, udp, and icmp are also keywords and must be escaped via backslash (\), which is \\ in the C-shell.
         /// Note that this primitive does not chase the protocol header chain.
         /// </remarks>
         /// <param name="proto"></param>
@@ -228,7 +228,7 @@ namespace Ether.Net
         /// </summary>
         /// <remarks>
         /// I.e., the Ethernet source or destination address was <paramref name="host"/>, but neither the IP source nor the IP destination was <paramref name="host"/>.
-        /// The <paramref name="host"/> must be a name and must be found both by the machine's host-name-to-IP-address resolution mechanisms (host name file, DNS, NIS, etc.) 
+        /// The <paramref name="host"/> must be a name and must be found both by the machine's host-name-to-IP-address resolution mechanisms (host name file, DNS, NIS, etc.)
         /// and by the machine's host-name-to-Ethernet-address resolution mechanism.
         /// </remarks>
         /// <param name="host"></param>
@@ -429,14 +429,14 @@ namespace Ether.Net
         public BPFBuilder Ilmic() => Append("ilmic");
 
         /// <summary>
-        /// True if the packet is an ATM packet, for SunATM on Solaris, 
+        /// True if the packet is an ATM packet, for SunATM on Solaris,
         /// and is on a signaling circuit and is a Q.2931 Setup, Call Proceeding, Connect, Connect Ack, Release, or Release Done message.
         /// </summary>
         /// <returns>The current <see cref="BPFBuilder"/> instance.</returns>
         public BPFBuilder Connectmsg() => Append("connectmsg");
 
         /// <summary>
-        /// True if the packet is an ATM packet, for SunATM on Solaris, 
+        /// True if the packet is an ATM packet, for SunATM on Solaris,
         /// and is on a meta signaling circuit and is a Q.2931 Setup, Call Proceeding, Connect, Release, or Release Done message.
         /// </summary>
         /// <returns>The current <see cref="BPFBuilder"/> instance.</returns>
